@@ -1,15 +1,46 @@
+name: Auto Update All MRS Ruleset (Target Rules Branch)
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # 北京时间每天上午 10:00 自动运行
+  workflow_dispatch: # 允许手动点击按钮立即更新
+
+jobs:
+  update-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout rules branch
+        uses: actions/checkout@v5
+        with:
+          ref: rules # 强制指定操作 rules 分支
+
       - name: Download all Rulesets
         run: |
-          # 【核心改动】每次下载前，先强行删掉旧的规范文件夹，彻底杜绝残留的错名文件
+          # 1. 备份你珍贵的 6 个自建规则到内存临时目录（防止被清理）
+          mkdir -p /tmp/my-rules
+          [ -f mihomo/domain/Dev.mrs ] && cp mihomo/domain/Dev.mrs /tmp/my-rules/ || true
+          [ -f mihomo/domain/Speedtest.mrs ] && cp mihomo/domain/Speedtest.mrs /tmp/my-rules/ || true
+          [ -f mihomo/ipcidr/AiIP.mrs ] && cp mihomo/ipcidr/AiIP.mrs /tmp/my-rules/ || true
+          [ -f mihomo/ipcidr/ChinaIP.mrs ] && cp mihomo/ipcidr/ChinaIP.mrs /tmp/my-rules/ || true
+          [ -f mihomo/ipcidr/TrackingIP.mrs ] && cp mihomo/ipcidr/TrackingIP.mrs /tmp/my-rules/ || true
+          [ -f mihomo/ipcidr/YoutubeIP.mrs ] && cp mihomo/ipcidr/YoutubeIP.mrs /tmp/my-rules/ || true
+
+          # 2. 强行彻底格式化这两个文件夹，清除所有错名垃圾残留
           rm -rf mihomo/domain
           rm -rf mihomo/ipcidr
-          
-          # 重新创建干净的文件夹
           mkdir -p mihomo/domain
           mkdir -p mihomo/ipcidr
 
+          # 3. 还原你的 6 个自建规则到干净的文件夹中
+          [ -f /tmp/my-rules/Dev.mrs ] && cp /tmp/my-rules/Dev.mrs mihomo/domain/ || true
+          [ -f /tmp/my-rules/Speedtest.mrs ] && cp /tmp/my-rules/Speedtest.mrs mihomo/domain/ || true
+          [ -f /tmp/my-rules/AiIP.mrs ] && cp /tmp/my-rules/AiIP.mrs mihomo/ipcidr/ || true
+          [ -f /tmp/my-rules/ChinaIP.mrs ] && cp /tmp/my-rules/ChinaIP.mrs mihomo/ipcidr/ || true
+          [ -f /tmp/my-rules/TrackingIP.mrs ] && cp /tmp/my-rules/TrackingIP.mrs mihomo/ipcidr/ || true
+          [ -f /tmp/my-rules/YoutubeIP.mrs ] && cp /tmp/my-rules/YoutubeIP.mrs mihomo/ipcidr/ || true
+
           # =================================================================
-          # 2. 批量抓取【域名规则集】 (存放至 mihomo/domain)
+          # 4. 批量抓取【域名规则集】 (确保链接与重命名精准对应)
           # =================================================================
           echo "正在同步域名规则集..."
           wget -O mihomo/domain/apple.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs"
@@ -31,7 +62,7 @@
           wget -O mihomo/domain/category-httpdns-cn.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-httpdns-cn.mrs"
           wget -O mihomo/domain/private.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs"
           wget -O mihomo/domain/apple-tvplus.mrs "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-tvplus.mrs"
-          wget -O mihomo/domain/google-fcm.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/googlefcm.mrs"
+          wget -O mihomo/domain/googlefcm.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/googlefcm.mrs"
           wget -O mihomo/domain/github.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/github.mrs"
           wget -O mihomo/domain/category-social-media-not-cn.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-social-media-!cn.mrs"
           wget -O mihomo/domain/geolocation-not-cn.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-!cn.mrs"
@@ -40,12 +71,12 @@
           wget -O mihomo/domain/trackers_domain.mrs "https://github.com/yhlh9982/clash-rules/releases/download/tracker-rules/trackers_domain.mrs"
           wget -O mihomo/domain/spotify.mrs "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
           wget -O mihomo/domain/openai.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"
-          wget -O mihomo/domain/openai-ads.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai@ads.mrs"
+          wget -O mihomo/domain/openai@ads.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai@ads.mrs"
           wget -O mihomo/domain/ai_domain_acl4ssr.mrs "https://github.com/ACL4SSR/ACL4SSR/raw/refs/heads/master/Clash/mrs/AI_domain.mrs"
           wget -O mihomo/domain/Custom_Direct.txt "https://github.com/Aethersailor/Custom_OpenClash_Rules/raw/main/rule/Custom_Direct.list"
 
           # =================================================================
-          # 3. 批量抓取【IP规则集】 (存放至 mihomo/ipcidr)
+          # 5. 批量抓取【IP规则集】
           # =================================================================
           echo "正在同步 IP 规则集..."
           wget -O mihomo/ipcidr/LocalAreaNetwork_ip.mrs "https://github.com/ACL4SSR/ACL4SSR/raw/refs/heads/master/Clash/mrs/LocalAreaNetwork_ip.mrs"
@@ -63,7 +94,6 @@
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # 【关键】使用 -A 参数，把被删掉的错名垃圾文件在 Git 记录里同步删除
           git add -A mihomo/
-          git commit -m "强行重置并同步最新正确规则集 [skip ci]" || exit 0
+          git commit -m "全新格式化并同步最简规整规则集 [skip ci]" || exit 0
           git push origin rules
