@@ -1,27 +1,15 @@
-name: Auto Update All MRS Ruleset (Target Rules Branch)
-
-on:
-  schedule:
-    - cron: '0 2 * * *' # 北京时间每天上午 10:00 自动运行
-  workflow_dispatch: # 允许手动点击按钮立即更新
-
-jobs:
-  update-rules:
-    runs-on: ubuntu-latest
-    steps:
-      # 【核心改动】让 main 分支的脚本一启动，就直接把代码库切到 rules 分支去工作
-      - name: Checkout rules branch
-        uses: actions/checkout@v5
-        with:
-          ref: rules # 强制指定操作 rules 分支
-
       - name: Download all Rulesets
         run: |
+          # 【核心改动】每次下载前，先强行删掉旧的规范文件夹，彻底杜绝残留的错名文件
+          rm -rf mihomo/domain
+          rm -rf mihomo/ipcidr
+          
+          # 重新创建干净的文件夹
           mkdir -p mihomo/domain
           mkdir -p mihomo/ipcidr
 
           # =================================================================
-          # 2. 批量抓取【域名规则集】 (共 31 条)
+          # 2. 批量抓取【域名规则集】 (存放至 mihomo/domain)
           # =================================================================
           echo "正在同步域名规则集..."
           wget -O mihomo/domain/apple.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs"
@@ -57,7 +45,7 @@ jobs:
           wget -O mihomo/domain/Custom_Direct.txt "https://github.com/Aethersailor/Custom_OpenClash_Rules/raw/main/rule/Custom_Direct.list"
 
           # =================================================================
-          # 3. 批量抓取【IP规则集】 (共 9 条)
+          # 3. 批量抓取【IP规则集】 (存放至 mihomo/ipcidr)
           # =================================================================
           echo "正在同步 IP 规则集..."
           wget -O mihomo/ipcidr/LocalAreaNetwork_ip.mrs "https://github.com/ACL4SSR/ACL4SSR/raw/refs/heads/master/Clash/mrs/LocalAreaNetwork_ip.mrs"
@@ -75,7 +63,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          git add mihomo/
-          git commit -m "自动同步最新规则至 rules 分支 [skip ci]" || exit 0
-          # 【关键】强制推送到 rules 分支，绝不影响 main 页面上的文件
+          # 【关键】使用 -A 参数，把被删掉的错名垃圾文件在 Git 记录里同步删除
+          git add -A mihomo/
+          git commit -m "强行重置并同步最新正确规则集 [skip ci]" || exit 0
           git push origin rules
