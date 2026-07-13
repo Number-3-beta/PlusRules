@@ -33,6 +33,9 @@ jobs:
           mkdir -p mihomo/ipcidr
           mkdir -p shadowrocket
 
+          # 核心保护逻辑：清理小火箭目录时，删除除了 My_ 开头以外的所有 .list 文件
+          find shadowrocket/ -type f -name '*.list' ! -name 'My_*' -delete
+
           # 3. 还原你的 6 个自建规则到干净的文件夹中
           [ -f /tmp/my-rules/Dev.mrs ] && cp /tmp/my-rules/Dev.mrs mihomo/domain/ || true
           [ -f /tmp/my-rules/Speedtest.mrs ] && cp /tmp/my-rules/Speedtest.mrs mihomo/domain/ || true
