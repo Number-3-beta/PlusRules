@@ -43,7 +43,7 @@ jobs:
           wget -O mihomo/domain/category-httpdns-cn.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-httpdns-cn.mrs"
           wget -O mihomo/domain/private.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/private.mrs"
           wget -O mihomo/domain/apple-tvplus.mrs "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-tvplus.mrs"
-          wget -O mihomo/domain/google-fcm.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/googlefcm.mrs"
+          wget -O mihomo/domain/google-fcm.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/googlefcm.mrs"
           wget -O mihomo/domain/github.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/github.mrs"
           wget -O mihomo/domain/category-social-media-not-cn.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-social-media-!cn.mrs"
           wget -O mihomo/domain/geolocation-not-cn.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/geolocation-!cn.mrs"
