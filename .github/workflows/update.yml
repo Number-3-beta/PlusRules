@@ -118,7 +118,7 @@ jobs:
           wget -O shadowrocket/YouTube.list "https://raw.githubusercontent.com/Blackmatrix7/ios_rule_script/master/rule/Shadowrocket/YouTube/YouTube.list"
           wget -O shadowrocket/Google_BM7.list "https://raw.githubusercontent.com/Blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Google/Google.list"
           wget -O shadowrocket/Google_ACL.list "https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/Ruleset/Google.list"
-          wget -O shadowrocket/BanProgramAD.list "https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/BanProgramAD.list"
+          wget -O shadowrocket/BanProgramAD.list "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list"
 
       - name: Commit and Push Changes
         run: |
