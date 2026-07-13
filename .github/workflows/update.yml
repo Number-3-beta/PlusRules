@@ -28,8 +28,10 @@ jobs:
           # 2. 强行彻底格式化这两个文件夹，清除所有错名垃圾残留
           rm -rf mihomo/domain
           rm -rf mihomo/ipcidr
+          rm -rf shadowrocket
           mkdir -p mihomo/domain
           mkdir -p mihomo/ipcidr
+          mkdir -p shadowrocket
 
           # 3. 还原你的 6 个自建规则到干净的文件夹中
           [ -f /tmp/my-rules/Dev.mrs ] && cp /tmp/my-rules/Dev.mrs mihomo/domain/ || true
@@ -88,6 +90,32 @@ jobs:
           wget -O mihomo/ipcidr/cn_geoip.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/cn.mrs"
           wget -O mihomo/ipcidr/private_ip.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/private.mrs"
           wget -O mihomo/ipcidr/trackers_ip.mrs "https://github.com/yhlh9982/clash-rules/releases/download/tracker-rules/trackers_ip.mrs"
+
+          # =================================================================
+          # 6. 批量抓取小火箭（Shadowrocket）纯文本规则集
+          # =================================================================
+          echo "正在同步小火箭专属规则..."
+          wget -O shadowrocket/ProxyGFWlist.list "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list"
+          wget -O shadowrocket/ChinaIp.list "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaIp.list"
+          wget -O shadowrocket/ChinaCompanyIp.list "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list"
+          wget -O shadowrocket/ChinaMedia.list "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaMedia.list"
+          wget -O shadowrocket/ChinaDomain.list "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list"
+          wget -O shadowrocket/UnBan.list "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list"
+          wget -O shadowrocket/LocalAreaNetwork.list "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list"
+          wget -O shadowrocket/AppleTV.list "https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/Ruleset/AppleTV.list"
+          wget -O shadowrocket/Apple.list "https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/Apple.list"
+          wget -O shadowrocket/Telegram.list "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list"
+          wget -O shadowrocket/Netflix.list "https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/Ruleset/Netflix.list"
+          wget -O shadowrocket/PikPak.list "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Shadowrocket/PikPak/PikPak.list"
+          wget -O shadowrocket/AI.list "https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/Ruleset/AI.list"
+          wget -O shadowrocket/spotify_MCX.list "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.list"
+          wget -O shadowrocket/Spotify_ACL.list "https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/Ruleset/Spotify.list"
+          wget -O shadowrocket/TikTok.list "https://raw.githubusercontent.com/Blackmatrix7/ios_rule_script/master/rule/Shadowrocket/TikTok/TikTok.list"
+          wget -O shadowrocket/OpenAi.list "https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/Ruleset/OpenAi.list"
+          wget -O shadowrocket/YouTube.list "https://raw.githubusercontent.com/Blackmatrix7/ios_rule_script/master/rule/Shadowrocket/YouTube/YouTube.list"
+          wget -O shadowrocket/Google_BM7.list "https://raw.githubusercontent.com/Blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Google/Google.list"
+          wget -O shadowrocket/Google_ACL.list "https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/Ruleset/Google.list"
+          wget -O shadowrocket/BanProgramAD.list "https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/BanProgramAD.list"
 
       - name: Commit and Push Changes
         run: |
