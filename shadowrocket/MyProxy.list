@@ -1,0 +1,5 @@
+DOMAIN,gdmf.apple.com,PROXY
+DOMAIN-KEYWORD,protonmail,PROXY
+DOMAIN-SUFFIX,protonmail.ch,PROXY
+DOMAIN-SUFFIX,protonmail.com,PROXY
+DOMAIN-SUFFIX,proton.me,PROXY
