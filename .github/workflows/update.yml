@@ -12,6 +12,7 @@ jobs:
       - name: Checkout rules branch
         uses: actions/checkout@v5
         with:
+          token: ${{ secrets.MY_PAT }}
           ref: rules # 强制指定操作 rules 分支
 
       - name: Download all Rulesets
