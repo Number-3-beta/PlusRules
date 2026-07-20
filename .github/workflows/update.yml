@@ -79,7 +79,7 @@ jobs:
           wget -O mihomo/domain/openai.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"
           wget -O mihomo/domain/openai@ads.mrs "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai@ads.mrs"
           wget -O mihomo/domain/ai_domain_acl4ssr.mrs "https://github.com/ACL4SSR/ACL4SSR/raw/refs/heads/master/Clash/mrs/AI_domain.mrs"
-          wget --tries=3 -O mihomo/domain/Custom_Direct.txt "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct.txt"
+          wget --tries=3 -O mihomo/domain/Custom_Direct.txt "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Custom_Direct.list"
           wget --tries=3 -O mihomo/domain/Custom_Direct_Classical.yaml "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_Classical.yaml"
           wget --tries=3 -O mihomo/domain/Custom_Direct_Classical_IP.yaml "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_Classical_IP.yaml"          
           wget --tries=3 -O mihomo/domain/Custom_Direct_Classical_Port.yaml "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_Classical_Port.yaml"
