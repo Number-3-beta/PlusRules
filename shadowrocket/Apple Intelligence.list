@@ -1,5 +1,5 @@
 # 内容：Apple Intelligence
-# 数量：19条
+# 数量：26条
 DOMAIN-SUFFIX,proactive.apple.com
 DOMAIN-SUFFIX,news-edge.apple.com
 DOMAIN-SUFFIX,api.openai.com
@@ -19,3 +19,10 @@ DOMAIN,siri.apple.com
 DOMAIN,mask.apple-relay.com
 DOMAIN-SUFFIX,bag.itunes.apple.com
 DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-KEYWORD,privatecloudcompute
+DOMAIN-SUFFIX,pcc.apple.com
+DOMAIN-SUFFIX,siri.apple.com
+DOMAIN-SUFFIX,siri-data.apple.com
+DOMAIN,apple-smooth.siri.apple.com
+DOMAIN-KEYWORD,apple-intelligence
+DOMAIN-SUFFIX,ai.apple.com
